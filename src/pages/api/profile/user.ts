@@ -12,7 +12,11 @@ export default async function handler(req: NextApiRequest, res:NextApiResponse){
     }
 
 
-    const user = await prisma.user.findFirst(decodedToken.id); 
+    const user = await prisma.user.findFirst({
+        where : {
+            id : Number(decodedToken.id),
+        }
+    }); 
 
     return res.status(200).json({message : "Fetched user info successfully", user})
 }
